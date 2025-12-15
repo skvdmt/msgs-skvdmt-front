@@ -1,4 +1,4 @@
-FROM node:22-20-alpine AS builder
+FROM node:22.20-alpine AS builder
 WORKDIR /usr/src/msgs-front
 EXPOSE 8000
 COPY . .
