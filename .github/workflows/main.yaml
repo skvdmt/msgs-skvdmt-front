@@ -40,11 +40,11 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}} <<EOF
             docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
-            docker stop msgs-front || true
-            docker rm msgs-front || true
+            docker stop msgs-skvdmt-front || true
+            docker rm msgs-skvdmt-front || true
             docker run -d \
              --network=skvdmt \
-             --name msgs-front \
+             --name msgs-skvdmt-front \
              --restart unless-stopped \
              ${{ vars.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
           EOF
