@@ -5,7 +5,7 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-FROM skvdmt/serve:ldatest
+FROM skvdmt/serve:latest
 WORKDIR /usr/local/bin
 COPY --from=builder /usr/src/msgs-front/dist/. /var/www/html
 EXPOSE 8000
