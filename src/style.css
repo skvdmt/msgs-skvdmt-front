@@ -1,4 +1,11 @@
 :root {
   background-color: #000;
   color: #ccc;
+
+  a {
+    color: lightskyblue;
+  }
+
+  font-size: 21px;
+  line-height: 1.5;
 }
