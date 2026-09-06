@@ -18,5 +18,8 @@ import MessagesWrapper from "./components/MessagesWrapper.vue";
   margin: 0 auto;
   padding: 0 30px;
   max-width: 1140px;
+  @media (max-width: 575px) {
+    padding: 0 5px;
+  }
 }
 </style>
