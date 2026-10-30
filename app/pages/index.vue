@@ -1,3 +1,15 @@
+<script setup>
+const title = "Messages from telegram bot";
+const description = "Messages from users who left them in my Telegram bot.";
+const keywords = "telegram, bot, messages, skidanovdima";
+useSeoMeta({
+  title: title,
+  description: description,
+  keywords: keywords,
+  ogTitle: title,
+});
+</script>
+
 <template>
   <div class="container">
     <h1>Messages from telegram bot...</h1>
