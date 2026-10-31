@@ -1,2 +1,5 @@
 User-Agent: *
-Disallow:
+Disallow: /_nuxt/
+Disallow: /_loading/
+Disallow: /api/
+Allow: /
