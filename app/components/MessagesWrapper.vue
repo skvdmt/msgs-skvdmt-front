@@ -88,23 +88,6 @@ onMounted(() => {
     page += 1;
   }
 });
-
-/**
- * Форматирование даты.
- */
-function formatSingleDate(dateString) {
-  if (!dateString) return "";
-  const d = new Date(Date.parse(dateString));
-  if (isNaN(d.getTime())) return dateString; // Если пришла не дата
-  const pad = (num) => String(num).padStart(2, "0");
-  const day = pad(d.getDate());
-  const month = pad(d.getMonth() + 1);
-  const year = d.getFullYear();
-  const hours = pad(d.getHours());
-  const minutes = pad(d.getMinutes());
-  const seconds = pad(d.getSeconds());
-  return `${day}.${month}.${year}, ${hours}:${minutes}:${seconds}`;
-}
 </script>
 
 <template>
@@ -118,7 +101,7 @@ function formatSingleDate(dateString) {
         >
         <span v-else class="unknown">unknown</span>
       </div>
-      <div class="date">{{ formatSingleDate(message.created_at) }}</div>
+      <div class="date">{{ message.created_at }}</div>
     </div>
     <div>{{ message.text }}</div>
   </div>
