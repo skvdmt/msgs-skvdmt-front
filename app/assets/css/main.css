@@ -1,8 +1,15 @@
 :root {
-  background-color: #000;
-  color: #ccc;
-  a {
-    color: lightskyblue;
+  color-scheme: light dark;
+  --bgcolor: light-dark(#f5f6fa,#2d3436);
+  --textcolor: light-dark(#2d3436,#dfe6e9);
+  --lnkcolor: light-dark(#079992,#81ecec);
+}
+
+body {
+  background-color: var(--bgcolor);
+  color: var(--textcolor);
+  & a, & a:visited {
+    color: var(--lnkcolor);
   }
   font-size: 21px;
   line-height: 1.5;
