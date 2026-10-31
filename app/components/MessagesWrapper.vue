@@ -121,7 +121,6 @@ function formatSingleDate(dateString) {
       <div class="date">{{ formatSingleDate(message.created_at) }}</div>
     </div>
     <div>{{ message.text }}</div>
-    <p></p>
   </div>
   <div ref="footer" class="footer"></div>
 </template>
