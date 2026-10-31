@@ -23,7 +23,7 @@ if (msgs.error.value) {
 }
 const MessageList = ref([]);
 let observer = null;
-SmoothMessages(msgs.data.value?.messages ?? []);
+SmoothMessages(msgs.data.value?.messages ?? [], 0);
 
 /**
  * Плавное появление сообщений.
@@ -32,6 +32,10 @@ SmoothMessages(msgs.data.value?.messages ?? []);
  */
 function SmoothMessages(messages, delay = 250) {
   if (messages.length === 0) return;
+  if (delay === 0) {
+    MessageList.value.push(...messages);
+    return;
+  }
   if (observer && footer.value) {
     observer.unobserve(footer.value);
   }
@@ -64,6 +68,7 @@ onMounted(() => {
     }
   };
   observer = new IntersectionObserver(callback, options);
+  observer.observe(footer.value);
 
   /**
    * Загрузка новых сообщений на клиенте.
