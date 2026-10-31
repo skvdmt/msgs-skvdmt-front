@@ -3,46 +3,57 @@ const config = useRuntimeConfig();
 const totalPages = useState("messages-total-count", () => 0);
 const limit = 10;
 const footer = ref(null);
-let page = 1;
+let page = 2;
 
 /**
  * Загрузка сообщений на сервере.
  */
-const msgs = await useFetch(
-  () => `${config.public.apiBase}/messages?limit=${limit}&page=${page}`,
-  {
-    timeout: config.public.timeout,
-    onResponse({ response }) {
-      const count = response.headers.get("x-total-count");
-      if (count) {
-        totalPages.value = Number(count) / limit;
-      }
-    },
+const msgs = await useFetch(() => `${config.public.apiBase}/messages`, {
+  query: { limit: limit, page: 1 },
+  timeout: config.public.timeout,
+  onResponse({ response }) {
+    const count = response.headers.get("x-total-count");
+    if (count) {
+      totalPages.value = Math.ceil(Number(count) / limit);
+    }
   },
-);
-
+});
 if (msgs.error.value) {
   throw new Error("Error loading data from the server.");
 }
-
-const MessageList = ref(msgs.data.value?.messages || []);
+const MessageList = ref([]);
+let observer = null;
+SmoothMessages(msgs.data.value?.messages ?? []);
 
 /**
- * Загрузка новых сообщений на клиенте.
+ * Плавное появление сообщений.
+ * @param messages - Массив сообщений.
+ * @param delay - Скорость появления каждого нового сообщения.
  */
-async function fetchMessages() {
-  const data = await $fetch(
-    `${config.public.apiBase}/messages?limit=${limit}&page=${page}`,
+function SmoothMessages(messages, delay = 250) {
+  if (messages.length === 0) return;
+  if (observer && footer.value) {
+    observer.unobserve(footer.value);
+  }
+  messages.forEach((message, index) => {
+    setTimeout(() => {
+      MessageList.value.push(message);
+    }, delay * index);
+  });
+  setTimeout(
+    () => {
+      if (observer && footer.value && page <= totalPages.value) {
+        observer.observe(footer.value);
+      }
+    },
+    delay * (messages.length - 1),
   );
-  MessageList.value = [...MessageList.value, ...data.messages];
-  page += 1;
 }
 
 onMounted(() => {
   /**
    * Обработка события вызова загрузки новых сообщений.
    */
-  page += 1;
   const options = {
     rootMargin: "0px",
     threshold: 1.0,
@@ -52,8 +63,25 @@ onMounted(() => {
       fetchMessages();
     }
   };
-  const observer = new IntersectionObserver(callback, options);
-  observer.observe(footer.value);
+  observer = new IntersectionObserver(callback, options);
+
+  /**
+   * Загрузка новых сообщений на клиенте.
+   */
+  async function fetchMessages() {
+    const { _data: data, ok: ok } = await $fetch.raw(
+      `${config.public.apiBase}/messages`,
+      {
+        query: { limit: limit, page: page },
+        timeout: config.public.timeout,
+      },
+    );
+    if (!ok) {
+      throw new Error("Error loading data from the server!");
+    }
+    SmoothMessages(data.messages ?? []);
+    page += 1;
+  }
 });
 
 /**
@@ -96,6 +124,7 @@ function formatSingleDate(dateString) {
 <style scoped>
 .message {
   margin: 25px 0;
+  animation: show 2s ease-out forwards;
   .info {
     display: flex;
     gap: 10px;
@@ -116,5 +145,13 @@ function formatSingleDate(dateString) {
 }
 .footer {
   height: 10px;
+}
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
