@@ -42,6 +42,8 @@ jobs:
             docker run -d \
               --network ${{ secrets.DOCKER_NETWORK }} \
               --name ${{ github.event.repository.name }} \
+              --memory="128m" \
+              -e NODE_OPTIONS="--max-old-space-size=80" \
               --volume ${{ secrets.HOME }}/logs/${{ github.event.repository.name }}:/var/log/${{ github.event.repository.name }} \
               --restart unless-stopped \
               ${{ github.repository }}
