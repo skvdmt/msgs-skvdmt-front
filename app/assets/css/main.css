@@ -39,6 +39,7 @@
 }
 
 :root {
+  font-size: 62.5%;
   color-scheme: light dark;
   --bgcolor: light-dark(#f5f6fa,#2d3436);
   --textcolor: light-dark(#2d3436,#dfe6e9);
@@ -53,7 +54,7 @@ body {
   & a, & a:visited {
     color: var(--lnkcolor);
   }
-  font-size: 21px;
+  font-size: 2.1rem;
   line-height: 1.5;
   letter-spacing:0.02em;
 }

@@ -110,12 +110,12 @@ onMounted(() => {
 
 <style scoped>
 .message {
-  margin: 25px 0;
+  margin: 2.5rem 0;
   animation: show 2s ease-out forwards;
   .info {
     display: flex;
-    gap: 10px;
-    font-size: 16px;
+    gap: 1rem;
+    font-size: 1.6rem;
     line-height: 1.5;
     .username {
       a {
@@ -131,7 +131,7 @@ onMounted(() => {
   }
 }
 .footer {
-  height: 10px;
+  height: 1rem;
 }
 @keyframes show {
   from {

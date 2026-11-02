@@ -24,10 +24,10 @@ useSeoMeta({
 <style scoped>
 .container {
   margin: 0 auto;
-  padding: 0 30px;
-  max-width: 1140px;
+  padding: 0 3rem;
+  max-width: 114rem;
   @media (max-width: 575px) {
-    padding: 0 5px;
+    padding: 0 0.5rem;
   }
 }
 </style>
