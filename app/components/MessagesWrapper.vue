@@ -132,6 +132,7 @@ onMounted(() => {
 }
 .footer {
   height: 1rem;
+  margin: 0 0 1rem;
 }
 @keyframes show {
   from {
