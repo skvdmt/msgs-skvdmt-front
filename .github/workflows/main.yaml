@@ -43,7 +43,8 @@ jobs:
               --network ${{ secrets.DOCKER_NETWORK }} \
               --name ${{ github.event.repository.name }} \
               --memory="128m" \
-              --env NODE_OPTIONS="--max-old-space-size=48 --optimize-for-size --max-semi-space-size=2" \
+              --cpus="0.5" \
+              --env NODE_OPTIONS="--max-old-space-size=48" \
               --volume ${{ secrets.HOME }}/logs/${{ github.event.repository.name }}:/var/log/${{ github.event.repository.name }} \
               --restart unless-stopped \
               ${{ github.repository }}

@@ -12,4 +12,4 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=8000
 COPY --from=builder /src/.output ./.output
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "--optimize-for-size", "--max-semi-space-size=2", ".output/server/index.mjs"]
